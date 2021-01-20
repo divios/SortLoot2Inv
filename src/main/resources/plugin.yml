@@ -1,0 +1,12 @@
+name: DropItems2Inv
+version: ${project.version}
+main: io.github.divios.dropitems2inv.DropItems2Inv
+api-version: 1.16
+commands:
+  dropItems2Inv:
+    description: Enables/disables feature
+    usage: /DropItems2Inv
+
+permissions:
+  DropItems2Inv.use:
+    default: op
