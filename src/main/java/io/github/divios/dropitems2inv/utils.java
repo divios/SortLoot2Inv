@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -73,5 +74,14 @@ public class utils{
         if(enable) return ChatColor.GREEN + "enable";
         else return ChatColor.RED + "disable";
     }
+
+    public static int firstEmpty(Inventory inv) {
+        for(int i = 0; i<41; i++) {
+            ItemStack item = inv.getItem(i);
+            if(isEmpty(item)) return i;
+        }
+        return -1;
+    }
+
 
 }
