@@ -1,9 +1,7 @@
 package io.github.divios.dropitems2inv;
 
-import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketContainer;
 import io.github.divios.dropitems2inv.packets.WrapperPlayServerCollect;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;

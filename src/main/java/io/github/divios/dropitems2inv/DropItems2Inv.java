@@ -1,6 +1,5 @@
 package io.github.divios.dropitems2inv;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import org.bukkit.plugin.java.JavaPlugin;
 

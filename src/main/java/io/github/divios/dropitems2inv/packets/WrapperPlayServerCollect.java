@@ -2,7 +2,6 @@ package io.github.divios.dropitems2inv.packets;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
-import io.github.divios.dropitems2inv.packets.AbstractPacket;
 
 public class WrapperPlayServerCollect extends AbstractPacket {
     public static final PacketType TYPE = PacketType.Play.Server.COLLECT;

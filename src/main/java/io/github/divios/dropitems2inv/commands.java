@@ -1,7 +1,6 @@
 package io.github.divios.dropitems2inv;
 
 import io.github.divios.dropitems2inv.guis.guiWrapper;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
