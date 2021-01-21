@@ -6,7 +6,7 @@
 
     <groupId>io.github.divios</groupId>
     <artifactId>dropItems2Inv</artifactId>
-    <version>1.0</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>DropItems2Inv</name>
@@ -42,7 +42,7 @@
                             <relocation>
                                     <!-- nbtapi -->
                                     <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                                    <shadedPattern>${project.groupId}.dailyrandomshop.nbtapi</shadedPattern>
+                                    <shadedPattern>${project.groupId}.dropitems2inv.nbtapi</shadedPattern>
                                 </relocation>
                             </relocations>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
@@ -69,6 +69,10 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io/</url>
+        </repository>
+        <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
             <layout>default</layout>
@@ -76,6 +80,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.dmulloy2</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.5.1</version>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

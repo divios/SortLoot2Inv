@@ -2,6 +2,7 @@ name: DropItems2Inv
 version: ${project.version}
 main: io.github.divios.dropitems2inv.DropItems2Inv
 api-version: 1.16
+softdepend: [ProtocolLib]
 commands:
   dropItems2Inv:
     description: Enables/disables feature
