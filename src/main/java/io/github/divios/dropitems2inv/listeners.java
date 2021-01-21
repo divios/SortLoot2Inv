@@ -4,7 +4,6 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import io.github.divios.dropitems2inv.packets.WrapperPlayServerCollect;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -67,8 +66,8 @@ public class listeners implements Listener {
         ItemStack item = e.getItem().getItemStack();
         Player p = (Player) e.getEntity();
         if(!p.hasPermission("DropItems2Inv.use")) return;
-        int slot;
 
+        int slot;
         slot = utils.getSlot(item);
         Player owner = utils.getOwner(item);
 
@@ -79,6 +78,7 @@ public class listeners implements Listener {
         p.getInventory().setItem(slot, utils.removeMetadata(item.clone()));
 
         e.setCancelled(true);
+
         if(protocolManager != null) {
             WrapperPlayServerCollect wpsc = new WrapperPlayServerCollect();
             wpsc.setCollectedEntityId(e.getItem().getEntityId());
@@ -88,10 +88,10 @@ public class listeners implements Listener {
         }
         e.getItem().remove();
 
-        try{
+        /*try{
             p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.5F);
         } catch (NoSuchFieldError ignored) {}
-        //utils.destroyItem(p, utils.firstEmpty(p.getInventory()));
+        utils.destroyItem(p, utils.firstEmpty(p.getInventory())); */
 
     }
 
