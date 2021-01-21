@@ -7,7 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class utils{
@@ -81,6 +84,22 @@ public class utils{
             if(isEmpty(item)) return i;
         }
         return -1;
+    }
+
+    public static void setDisplayName(ItemStack item, String name) {
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+        item.setItemMeta(meta);
+    }
+
+    public static void setLore(ItemStack item, List<String> lore){
+        ItemMeta meta = item.getItemMeta();
+        List<String> coloredLore = new ArrayList<>();
+        for(String s: lore) {
+            coloredLore.add(ChatColor.translateAlternateColorCodes('&', s));
+        }
+        meta.setLore(coloredLore);
+        item.setItemMeta(meta);
     }
 
 
