@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import io.github.divios.dropitems2inv.packets.WrapperPlayServerCollect;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -63,21 +64,30 @@ public class listeners implements Listener {
         if( !(e.getEntity() instanceof Player) ||
             !utils.isDrop2InvItem(e.getItem().getItemStack())) return;
 
-        ItemStack item = e.getItem().getItemStack();
+        Item item = e.getItem();
+        ItemStack itemStack = item.getItemStack();
         Player p = (Player) e.getEntity();
         if(!p.hasPermission("DropItems2Inv.use")) return;
 
         int slot;
-        slot = utils.getSlot(item);
-        Player owner = utils.getOwner(item);
+        slot = utils.getSlot(itemStack);
+        Player owner = utils.getOwner(itemStack);
 
-        if(slot == -1 || !p.equals(owner) || !utils.isEmpty(p, slot)) {
-            utils.removeMetadata(item);
+        if(slot == -1 || !p.equals(owner) ||
+                utils.inventoryFull(p.getInventory())) {
+            item.setItemStack(utils.removeMetadata(itemStack));
             return;
         }
-        p.getInventory().setItem(slot, utils.removeMetadata(item.clone()));
 
         e.setCancelled(true);
+
+        if(!utils.isEmpty(p.getInventory().getItem(slot))) {
+            item.setPickupDelay(12);
+            item.setItemStack(utils.removeMetadata(itemStack));
+            return;
+        }
+
+        p.getInventory().setItem(slot, utils.removeMetadata(itemStack.clone()));
 
         if(protocolManager != null) {
             WrapperPlayServerCollect wpsc = new WrapperPlayServerCollect();
@@ -86,7 +96,7 @@ public class listeners implements Listener {
             wpsc.sendPacket(p);
 
         }
-        e.getItem().remove();
+        item.remove();
 
         /*try{
             p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.5F);
