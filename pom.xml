@@ -96,11 +96,11 @@
     </repositories>
 
     <dependencies>
-        <!--  <dependency>
-            <groupId>com.github.dmulloy2</groupId>
+        <!--<dependency>
+             <groupId>com.github.dmulloy2</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.1</version>
-        </dependency>-->
+        </dependency> -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

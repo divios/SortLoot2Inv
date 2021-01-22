@@ -1,0 +1,3 @@
+
+Maybe try another approach to how the algorithm works. An idea is on pick, check if that item has metadata, then
+scan x blocks and get all the items that have metadata too. Then sort all of them and remove entity
