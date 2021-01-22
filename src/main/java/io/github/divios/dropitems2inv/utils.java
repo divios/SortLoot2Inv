@@ -86,6 +86,13 @@ public class utils{
         return -1;
     }
 
+    public static boolean inventoryFull(Inventory inv) {
+        for(ItemStack item: inv.getContents()) {
+            if(isEmpty(item)) return false;
+        }
+        return true;
+    }
+
     public static void setDisplayName(ItemStack item, String name) {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
