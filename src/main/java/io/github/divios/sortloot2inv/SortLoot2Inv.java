@@ -1,9 +1,9 @@
-package io.github.divios.dropitems2inv;
+package io.github.divios.sortloot2inv;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class DropItems2Inv extends JavaPlugin {
+public final class SortLoot2Inv extends JavaPlugin {
 
-    private static DropItems2Inv instance;
+    private static SortLoot2Inv instance;
     private static boolean enable = true;
 
     @Override
@@ -12,7 +12,7 @@ public final class DropItems2Inv extends JavaPlugin {
         instance = this;
         listeners.getInstance();
 
-        getCommand("dropitems2inv").setExecutor(new commands());
+        getCommand("SortLoot2Inv").setExecutor(new commands());
     }
 
     @Override
@@ -20,7 +20,7 @@ public final class DropItems2Inv extends JavaPlugin {
 
     }
 
-    public static DropItems2Inv getInstance() {
+    public static SortLoot2Inv getInstance() {
         return instance;
     }
 
@@ -28,8 +28,8 @@ public final class DropItems2Inv extends JavaPlugin {
         return enable;
     }
 
-    public static void toggleEnable() {
-        enable = !enable;
+    public static boolean toggleEnable() {
+        return enable = !enable;
     }
 
 }

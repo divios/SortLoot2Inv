@@ -1,7 +1,8 @@
-package io.github.divios.dropitems2inv.guis;
+package io.github.divios.sortloot2inv.guis;
 
-import io.github.divios.dropitems2inv.DropItems2Inv;
-import io.github.divios.dropitems2inv.utils;
+import io.github.divios.sortloot2inv.SortLoot2Inv;
+import io.github.divios.sortloot2inv.listeners;
+import io.github.divios.sortloot2inv.utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 class settingsGui implements Listener, InventoryHolder {
 
     private static settingsGui SettingsGui = null;
-    private static final DropItems2Inv main = DropItems2Inv.getInstance();
+    private static final SortLoot2Inv main = SortLoot2Inv.getInstance();
 
     public static void init() {
         SettingsGui = new settingsGui();
@@ -34,7 +35,7 @@ class settingsGui implements Listener, InventoryHolder {
         Inventory inv = Bukkit.createInventory(getInstance(), 27, ChatColor.DARK_AQUA + "" +
                 ChatColor.BOLD + "DropItems2Inv Settings");
         ItemStack toggleEnable = null;
-        if(DropItems2Inv.isEnabledv()) {
+        if(SortLoot2Inv.isEnabledv()) {
             toggleEnable = new ItemStack(Material.EMERALD_BLOCK);
             utils.setDisplayName(toggleEnable, "&a&lEnable");
         }
@@ -61,7 +62,9 @@ class settingsGui implements Listener, InventoryHolder {
                 utils.isEmpty(e.getCurrentItem())) return;
 
         if(e.getSlot() == 13) {
-            DropItems2Inv.toggleEnable();
+            if (SortLoot2Inv.toggleEnable()) listeners.register();
+            else listeners.unregister();
+
             e.getWhoClicked().sendMessage(ChatColor.DARK_AQUA + "DropItems2Inv > " +
                     ChatColor.GRAY + "Features are now " + utils.getEnableStr());
             e.getWhoClicked().openInventory(getInventory());

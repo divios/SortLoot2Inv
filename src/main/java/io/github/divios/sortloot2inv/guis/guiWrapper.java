@@ -1,4 +1,4 @@
-package io.github.divios.dropitems2inv.guis;
+package io.github.divios.sortloot2inv.guis;
 
 import org.bukkit.entity.Player;
 

@@ -1,4 +1,4 @@
-package io.github.divios.dropitems2inv.packets;
+package io.github.divios.sortloot2inv.packets;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
