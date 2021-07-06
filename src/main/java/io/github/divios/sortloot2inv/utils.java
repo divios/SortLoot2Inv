@@ -1,15 +1,24 @@
 package io.github.divios.sortloot2inv;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import io.github.divios.sortloot2inv.packets.WrapperPlayServerCollect;
+import io.github.divios.sortloot2inv.packets.WrapperPlayServerEntityEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +28,7 @@ public class utils{
         NBTItem nbtItem = new NBTItem(item);
         nbtItem.setString("Drop2InvOwner", p.getUniqueId().toString());
         nbtItem.setInteger("Drop2InvSlot", slot);
+
         return nbtItem.getItem();
     }
 
@@ -107,6 +117,12 @@ public class utils{
         }
         meta.setLore(coloredLore);
         item.setItemMeta(meta);
+    }
+
+    public static void async (Runnable r) {
+        Bukkit.getScheduler().
+                runTaskLaterAsynchronously(
+                        SortLoot2Inv.getInstance(), r, 2L);
     }
 
 

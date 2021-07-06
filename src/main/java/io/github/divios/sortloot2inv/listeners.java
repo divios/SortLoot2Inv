@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -62,6 +63,7 @@ public class listeners implements Listener {
 
         e.getDrops().addAll(newDrops);
     }
+
 
     @EventHandler
     public void onEntityItemPickUp(EntityPickupItemEvent e) {

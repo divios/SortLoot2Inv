@@ -1,4 +1,5 @@
 package io.github.divios.sortloot2inv;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SortLoot2Inv extends JavaPlugin {
@@ -11,6 +12,9 @@ public final class SortLoot2Inv extends JavaPlugin {
 
         instance = this;
         listeners.getInstance();
+
+        int pluginId = 10090;
+        Metrics metrics = new Metrics(instance, pluginId);
 
         getCommand("SortLoot2Inv").setExecutor(new commands());
     }
