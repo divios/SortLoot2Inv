@@ -12,6 +12,7 @@ plugins {
 
 
 repositories {
+    mavenCentral()
     mavenLocal()
     maven {
         url = uri('https://hub.spigotmc.org/nexus/content/repositories/snapshots/')
@@ -30,10 +31,6 @@ repositories {
     }
 
     maven {
-        url = uri('https://repo.codemc.org/repository/maven-public/')
-    }
-
-    maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
 }
@@ -42,8 +39,8 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT'
 
     implementation 'org.jetbrains:annotations:22.0.0'
-    implementation 'org.bstats:bstats-bukkit:1.8'
-    implementation 'de.tr7zw:item-nbt-api:2.8.0'
+    implementation 'org.bstats:bstats-bukkit:2.2.1'
+    implementation 'de.tr7zw:item-nbt-api-plugin:2.9.0-SNAPSHOT'
     implementation 'com.github.cryptomorin:XSeries:8.6.0.0.1'
     implementation 'com.github.Redempt:RedLib:6.4.0.1'
 }
@@ -55,7 +52,7 @@ shadowJar {
     relocate('io.github.divios.core_lib', 'io.github.divios.dependencies.Core_lib')
     relocate('io.github.divios.jcommands', 'io.github.divios.dependencies.jCommands')
     relocate('com.cryptomorin.xseries', 'io.github.divios.dependencies.XSeries')
-    relocate('com.github.Redempt', 'io.github.divios.dependencies.RedLib')
+    relocate('redempt.redlib', 'io.github.divios.dependencies.RedLib')
     minimize()
 }
 
@@ -114,6 +111,12 @@ publishing {
         maven(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+processResources {
+    filesNotMatching(["*.db"]) {
+        expand projectVersion: pluginVersion
     }
 }
 

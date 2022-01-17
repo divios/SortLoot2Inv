@@ -2,7 +2,7 @@ package io.github.divios.sortloot2inv.guis;
 
 import io.github.divios.sortloot2inv.SortLoot2Inv;
 import io.github.divios.sortloot2inv.listeners;
-import io.github.divios.sortloot2inv.utils;
+import io.github.divios.sortloot2inv.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 class settingsGui implements Listener, InventoryHolder {
 
     private static settingsGui SettingsGui = null;
-    private static final SortLoot2Inv main = SortLoot2Inv.getInstance();
+    private static final SortLoot2Inv main = SortLoot2Inv.get();
 
     public static void init() {
         SettingsGui = new settingsGui();
@@ -37,14 +37,14 @@ class settingsGui implements Listener, InventoryHolder {
         ItemStack toggleEnable = null;
         if(SortLoot2Inv.isEnabledv()) {
             toggleEnable = new ItemStack(Material.EMERALD_BLOCK);
-            utils.setDisplayName(toggleEnable, "&a&lEnable");
+            Utils.setDisplayName(toggleEnable, "&a&lEnable");
         }
         else {
             toggleEnable = new ItemStack(Material.REDSTONE_BLOCK);
-            utils.setDisplayName(toggleEnable, "&c&lDisable");
+            Utils.setDisplayName(toggleEnable, "&c&lDisable");
         }
 
-        utils.setLore(toggleEnable, Arrays.asList("&7Click to toggle the plugin's", "&7feature"));
+        Utils.setLore(toggleEnable, Arrays.asList("&7Click to toggle the plugin's", "&7feature"));
 
         inv.setItem(13, toggleEnable);
 
@@ -59,14 +59,14 @@ class settingsGui implements Listener, InventoryHolder {
         e.setCancelled(true);
 
         if(e.getSlot() != e.getRawSlot() ||
-                utils.isEmpty(e.getCurrentItem())) return;
+                Utils.isEmpty(e.getCurrentItem())) return;
 
         if(e.getSlot() == 13) {
             if (SortLoot2Inv.toggleEnable()) listeners.register();
             else listeners.unregister();
 
             e.getWhoClicked().sendMessage(ChatColor.DARK_AQUA + "DropItems2Inv > " +
-                    ChatColor.GRAY + "Features are now " + utils.getEnableStr());
+                    ChatColor.GRAY + "Features are now " + Utils.getEnableStr());
             e.getWhoClicked().openInventory(getInventory());
         }
 

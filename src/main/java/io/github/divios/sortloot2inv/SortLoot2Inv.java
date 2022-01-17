@@ -14,7 +14,7 @@ public final class SortLoot2Inv extends JavaPlugin {
         listeners.getInstance();
 
         int pluginId = 10090;
-        Metrics metrics = new Metrics(instance, pluginId);
+        new Metrics(instance, pluginId);
 
         getCommand("SortLoot2Inv").setExecutor(new commands());
     }
@@ -24,7 +24,7 @@ public final class SortLoot2Inv extends JavaPlugin {
 
     }
 
-    public static SortLoot2Inv getInstance() {
+    public static SortLoot2Inv get() {
         return instance;
     }
 

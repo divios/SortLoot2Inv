@@ -1,33 +1,27 @@
 package io.github.divios.sortloot2inv;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketContainer;
-import de.tr7zw.changeme.nbtapi.NBTItem;
-import io.github.divios.sortloot2inv.packets.WrapperPlayServerCollect;
-import io.github.divios.sortloot2inv.packets.WrapperPlayServerEntityEffect;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class utils{
+public class Utils {
+
+    public static final String SLOT_KEY = "Drop2InvSlot";
+    public static final String OWNER_KEY = "Drop2InvOwner";
 
     public static ItemStack setDropMetadata(ItemStack item, Player p, int slot) {
         NBTItem nbtItem = new NBTItem(item);
-        nbtItem.setString("Drop2InvOwner", p.getUniqueId().toString());
-        nbtItem.setInteger("Drop2InvSlot", slot);
+        nbtItem.setString(OWNER_KEY, p.getUniqueId().toString());
+        nbtItem.setInteger(SLOT_KEY, slot);
 
         return nbtItem.getItem();
     }
@@ -35,8 +29,8 @@ public class utils{
     public static Player getOwner(ItemStack item) {
 
         NBTItem nbtItem = new NBTItem(item);
-        if(!nbtItem.hasKey("Drop2InvOwner")) return null;
-        String uuidStr = nbtItem.getString("Drop2InvOwner");
+        if(!nbtItem.hasKey(OWNER_KEY)) return null;
+        String uuidStr = nbtItem.getString(OWNER_KEY);
 
         return Bukkit.getPlayer(UUID.fromString(uuidStr));
     }
@@ -44,26 +38,25 @@ public class utils{
     public static Integer getSlot(ItemStack item) {
 
         NBTItem nbtItem = new NBTItem(item);
-        if(!nbtItem.hasKey("Drop2InvSlot")) return -1;
+        if(!nbtItem.hasKey(SLOT_KEY)) return -1;
 
-        if(nbtItem.getInteger("Drop2InvSlot") == null) return -1;
+        if(nbtItem.getInteger(SLOT_KEY) == null) return -1;
 
-        return nbtItem.getInteger("Drop2InvSlot");
+        return nbtItem.getInteger(SLOT_KEY);
     }
 
     public static ItemStack removeMetadata(ItemStack item) {
         NBTItem nbtItem = new NBTItem(item);
 
-        nbtItem.removeKey("Drop2InvOwner");
-        nbtItem.removeKey("Drop2InvSlot");
+        nbtItem.removeKey(OWNER_KEY);
+        nbtItem.removeKey(SLOT_KEY);
 
         return nbtItem.getItem();
     }
 
     public static boolean isDrop2InvItem(ItemStack item) {
         NBTItem nbtItem = new NBTItem(item);
-
-        return nbtItem.hasKey("Drop2InvSlot") && nbtItem.hasKey("Drop2InvOwner");
+        return nbtItem.hasKey(SLOT_KEY) && nbtItem.hasKey(OWNER_KEY);
     }
 
     public static boolean isEmpty(Player p, int slot) {
@@ -76,7 +69,7 @@ public class utils{
     }
 
     public static void destroyItem(Player p, int slot) {
-        Bukkit.getScheduler().runTaskLater(SortLoot2Inv.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(SortLoot2Inv.get(), () -> {
             p.getInventory().setItem(slot, null);
         }, 1L);
     }
@@ -122,7 +115,7 @@ public class utils{
     public static void async (Runnable r) {
         Bukkit.getScheduler().
                 runTaskLaterAsynchronously(
-                        SortLoot2Inv.getInstance(), r, 2L);
+                        SortLoot2Inv.get(), r, 2L);
     }
 
 
