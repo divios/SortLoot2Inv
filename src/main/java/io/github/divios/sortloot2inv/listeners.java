@@ -21,6 +21,7 @@ import java.util.List;
 
 public class listeners implements Listener {
 
+    private static final String PERM_KEY = "SortLoot2Inv.use";
     private static listeners Listeners = null;
 
     private static void init() {
@@ -44,12 +45,10 @@ public class listeners implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-
         if (!SortLoot2Inv.isEnabledv()) return;
 
         Player p = e.getEntity();
-
-        if (e.getKeepInventory() || !p.hasPermission("DropItems2Inv.use")) return;
+        if (e.getKeepInventory() || !p.hasPermission(PERM_KEY)) return;
 
         e.getDrops().clear();
         List<ItemStack> newDrops = new ArrayList<>();
@@ -66,7 +65,6 @@ public class listeners implements Listener {
 
     @EventHandler
     public void onEntityItemPickUp(EntityPickupItemEvent e) {
-
         if (!SortLoot2Inv.isEnabledv()) return;
 
         if (!(e.getEntity() instanceof Player) ||
@@ -75,7 +73,7 @@ public class listeners implements Listener {
         Item item = e.getItem();
         ItemStack itemStack = item.getItemStack();
         Player p = (Player) e.getEntity();
-        if (!p.hasPermission("DropItems2Inv.use")) return;
+        if (!p.hasPermission(PERM_KEY)) return;
 
         int slot;
         slot = Utils.getSlot(itemStack);

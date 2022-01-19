@@ -1,7 +1,7 @@
 name: SortLoot2Inv
 version: ${projectVersion}
 main: io.github.divios.sortloot2inv.SortLoot2Inv
-api-version: 1.16
+api-version: 1.13
 softdepend: [ProtocolLib]
 commands:
   sortLoot2Inv:
