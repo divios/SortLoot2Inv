@@ -38,10 +38,10 @@ repositories {
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT'
 
-    implementation 'org.jetbrains:annotations:22.0.0'
-    implementation 'org.bstats:bstats-bukkit:2.2.1'
-    implementation 'de.tr7zw:item-nbt-api-plugin:2.9.0-SNAPSHOT'
-    implementation 'com.github.cryptomorin:XSeries:8.6.0.0.1'
+    implementation 'org.jetbrains:annotations:23.0.0'
+    implementation 'org.bstats:bstats-bukkit:3.0.0'
+    implementation 'de.tr7zw:item-nbt-api-plugin:2.10.0-SNAPSHOT'
+    implementation 'com.github.cryptomorin:XSeries:8.8.0'
     implementation 'com.github.Redempt:RedLib:6.4.0.1'
 }
 
@@ -65,43 +65,30 @@ task updateJars {
     doLast {
         // windows
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            copy {
-                from 'build/libs/SortLoot2Inv'  + "-all.jar"
-                into 'C:/Users/serbe/OneDrive/Desktop/server_pruebas/server/plugins'
-                rename("SortLoot2Inv"  + "-all.jar"
-                        , "SortLoot2Inv"  + ".jar")
-            }
+
+            [1.18, 1.17, 1.16].forEach(value -> {
+
+                copy {
+                    from "build/libs/DailyShop-${pluginVersion}-all.jar"
+                    into "C:/Users/serbe/OneDrive/Desktop/server_pruebas/server-${value}/plugins"
+                    rename("DailyShop-${pluginVersion}-all.jar"
+                            , "DailyShop-${pluginVersion}.jar")
+                }
+
+            })
+
         } else if (Os.isFamily(Os.FAMILY_MAC)) {  // MAC
-            copy {
-                from 'build/libs/SortLoot2Inv'  + "-all.jar"
-                into '/Users/sergiobernalparrondo/Desktop/servers/server-1.18/plugins'
-                rename("SortLoot2Inv"  + "-all.jar"
-                        , "SortLoot2Inv"  + ".jar")
-            }
-            copy {
-                from 'build/libs/SortLoot2Inv'  + "-all.jar"
-                into '/Users/sergiobernalparrondo/Desktop/servers/server-1.17/plugins'
-                rename("SortLoot2Inv"  + "-all.jar"
-                        , "SortLoot2Inv"  + ".jar")
-            }
-            copy {
-                from 'build/libs/SortLoot2Inv'  + "-all.jar"
-                into '/Users/sergiobernalparrondo/Desktop/servers/server-1.13/plugins'
-                rename("SortLoot2Inv"  + "-all.jar"
-                        , "SortLoot2Inv"  + ".jar")
-            }
-            copy {
-                from 'build/libs/SortLoot2Inv'  + "-all.jar"
-                into '/Users/sergiobernalparrondo/Desktop/servers/server-1.12/plugins'
-                rename("SortLoot2Inv"  + "-all.jar"
-                        , "SortLoot2Inv"  + ".jar")
-            }
-            copy {
-                from 'build/libs/SortLoot2Inv'  + "-all.jar"
-                into '/Users/sergiobernalparrondo/Desktop/servers/server-1.8/plugins'
-                rename("SortLoot2Inv"  + "-all.jar"
-                        , "SortLoot2Inv"  + ".jar")
-            }
+
+            [1.19, 1.18, 1.17, 1.16, 1.13, 1.12, 1.8].forEach(value -> {
+
+                copy {
+                    from "build/libs/DailyShop-${pluginVersion}-all.jar"
+                    into "/Users/sergiobernalparrondo/Desktop/servers/server-${value}/plugins"
+                    rename("DailyShop-${pluginVersion}-all.jar"
+                            , "DailyShop-${pluginVersion}.jar")
+                }
+
+            })
         }
     }
 }
