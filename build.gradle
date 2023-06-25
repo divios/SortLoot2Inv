@@ -23,7 +23,7 @@ repositories {
     }
 
     maven {
-        url = uri('https://jitpack.io/')
+        url = uri('https://redempt.dev')
     }
 
     maven {
@@ -36,13 +36,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT'
 
     implementation 'org.jetbrains:annotations:23.0.0'
     implementation 'org.bstats:bstats-bukkit:3.0.0'
-    implementation 'de.tr7zw:item-nbt-api-plugin:2.10.0-SNAPSHOT'
-    implementation 'com.github.cryptomorin:XSeries:8.8.0'
-    implementation 'com.github.Redempt:RedLib:6.4.0.1'
+    implementation 'de.tr7zw:item-nbt-api-plugin:2.11.3'
+    implementation 'com.github.cryptomorin:XSeries:9.4.0'
+    implementation 'com.github.Redempt:RedLib:6.5.8'
+    implementation 'com.github.divios:neptune_framework:1.0-SNAPSHOT'
 }
 
 shadowJar {

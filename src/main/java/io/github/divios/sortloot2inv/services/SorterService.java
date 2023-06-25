@@ -1,15 +1,14 @@
-package io.github.divios.sortloot2inv;
+package io.github.divios.sortloot2inv.services;
 
 import com.cryptomorin.xseries.ReflectionUtils;
 import com.cryptomorin.xseries.messages.ActionBar;
 import com.cryptomorin.xseries.particles.ParticleDisplay;
-import org.bukkit.Bukkit;
+import com.github.divios.neptune_framework.core.annotations.Component;
+import io.github.divios.sortloot2inv.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,34 +18,12 @@ import redempt.redlib.nms.NMSObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class listeners implements Listener {
+@Component
+public class SorterService {
 
     private static final String PERM_KEY = "SortLoot2Inv.use";
-    private static listeners Listeners = null;
 
-    private static void init() {
-        Listeners = new listeners();
-        register();
-    }
-
-    public static listeners getInstance() {
-        if (Listeners == null) init();
-        return Listeners;
-    }
-
-    public static void register() {
-        Bukkit.getPluginManager().registerEvents(getInstance(), SortLoot2Inv.get());
-    }
-
-    public static void unregister() {
-        PlayerDeathEvent.getHandlerList().unregister(getInstance());
-        EntityPickupItemEvent.getHandlerList().unregister(getInstance());
-    }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
-        if (!SortLoot2Inv.isEnabledv()) return;
-
+    public void onDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
         if (e.getKeepInventory() || !p.hasPermission(PERM_KEY)) return;
 
@@ -62,11 +39,7 @@ public class listeners implements Listener {
         e.getDrops().addAll(newDrops);
     }
 
-
-    @EventHandler
-    public void onEntityItemPickUp(EntityPickupItemEvent e) {
-        if (!SortLoot2Inv.isEnabledv()) return;
-
+    public void onPickUp(EntityPickupItemEvent e) {
         if (!(e.getEntity() instanceof Player) ||
                 !Utils.isDrop2InvItem(e.getItem().getItemStack())) return;
 
@@ -75,8 +48,7 @@ public class listeners implements Listener {
         Player p = (Player) e.getEntity();
         if (!p.hasPermission(PERM_KEY)) return;
 
-        int slot;
-        slot = Utils.getSlot(itemStack);
+        int slot = Utils.getSlot(itemStack);
         Player owner = Utils.getOwner(itemStack);
 
         if (slot == -1 || !p.equals(owner) ||
@@ -95,26 +67,26 @@ public class listeners implements Listener {
 
         p.getInventory().setItem(slot, Utils.removeMetadata(itemStack.clone()));
 
-        NMSObject packet = (ReflectionUtils.VER >= 17
+        sendPackets(item, p);
+        item.remove();
+
+        spawnParticles(item, p);
+        ActionBar.sendActionBar(p, ChatColor.DARK_AQUA + "Item set to previous slot");
+    }
+
+    private void spawnParticles(Item item, Player p) {
+        ParticleDisplay.of(Particle.VILLAGER_HAPPY).spawn(item.getLocation().add(0, 1, 0), p);
+        ParticleDisplay.of(Particle.VILLAGER_HAPPY).spawn(item.getLocation().add(0, 1, 0), p);
+        ParticleDisplay.of(Particle.VILLAGER_HAPPY).spawn(item.getLocation().add(0, 1, 0), p);
+    }
+
+    private void sendPackets(Item item, Player p) {
+        NMSObject packet = (ReflectionUtils.MINOR_NUMBER >= 17
                 ? NMSHelper.getClass("net.minecraft.network.protocol.game.PacketPlayOutCollect")
                 : NMSHelper.getClass(ReflectionUtils.getNMSClass("PacketPlayOutCollect").getName()))
                 .getInstance(item.getEntityId(), p.getEntityId(), item.getItemStack().getAmount());
 
         ReflectionUtils.sendPacketSync(p, packet.getObject());
-        item.remove();
-
-        ParticleDisplay.of(Particle.VILLAGER_HAPPY).spawn(item.getLocation().add(0, 1, 0), p);
-        ParticleDisplay.of(Particle.VILLAGER_HAPPY).spawn(item.getLocation().add(0, 1, 0), p);
-        ParticleDisplay.of(Particle.VILLAGER_HAPPY).spawn(item.getLocation().add(0, 1, 0), p);
-
-        ActionBar.sendActionBar(p, ChatColor.DARK_AQUA + "Item set to previous slot");
-
-        /*try{
-            p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.5F, 1.5F);
-        } catch (NoSuchFieldError ignored) {}
-        utils.destroyItem(p, utils.firstEmpty(p.getInventory())); */
-
     }
-
 
 }
